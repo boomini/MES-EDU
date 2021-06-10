@@ -46,6 +46,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PP_ActureOutPut%28실적 등록%29.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PP_ActureOutPut%28실적 등록%29.Designer.cs">
+      <DependentUpon>PP_ActureOutPut%28실적 등록%29.cs</DependentUpon>
+    </Compile>
     <Compile Include="PP_StockPP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +157,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PP_ActureOutPut%28실적 등록%29.resx">
+      <DependentUpon>PP_ActureOutPut%28실적 등록%29.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PP_StockPP.resx">
       <DependentUpon>PP_StockPP.cs</DependentUpon>
     </EmbeddedResource>
