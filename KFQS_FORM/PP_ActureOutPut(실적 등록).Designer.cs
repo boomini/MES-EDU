@@ -42,8 +42,8 @@ namespace KFQS_Form
             Infragistics.Win.Appearance appearance41 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance47 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance45 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton dateButton5 = new Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton();
-            Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton dateButton6 = new Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton();
+            Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton dateButton1 = new Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton();
+            Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton dateButton2 = new Infragistics.Win.UltraWinSchedule.CalendarCombo.DateButton();
             Infragistics.Win.Appearance appearance4 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance3 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance7 = new Infragistics.Win.Appearance();
@@ -207,6 +207,7 @@ namespace KFQS_Form
             this.grid1.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChange;
             this.grid1.UseFlatMode = Infragistics.Win.DefaultableBoolean.True;
             this.grid1.UseOsThemes = Infragistics.Win.DefaultableBoolean.False;
+            this.grid1.AfterRowActivate += new System.EventHandler(this.grid1_AfterRowActivate);
             // 
             // ultraLabel1
             // 
@@ -240,21 +241,23 @@ namespace KFQS_Form
             // 
             // dtpEnd_H
             // 
-            this.dtpEnd_H.DateButtons.Add(dateButton5);
+            this.dtpEnd_H.DateButtons.Add(dateButton1);
             this.dtpEnd_H.Location = new System.Drawing.Point(941, 25);
             this.dtpEnd_H.Name = "dtpEnd_H";
             this.dtpEnd_H.NonAutoSizeHeight = 26;
             this.dtpEnd_H.Size = new System.Drawing.Size(145, 32);
             this.dtpEnd_H.TabIndex = 243;
+            this.dtpEnd_H.Value = new System.DateTime(2021, 6, 10, 0, 0, 0, 0);
             // 
             // dtpStart_H
             // 
-            this.dtpStart_H.DateButtons.Add(dateButton6);
+            this.dtpStart_H.DateButtons.Add(dateButton2);
             this.dtpStart_H.Location = new System.Drawing.Point(773, 25);
             this.dtpStart_H.Name = "dtpStart_H";
             this.dtpStart_H.NonAutoSizeHeight = 26;
             this.dtpStart_H.Size = new System.Drawing.Size(145, 32);
             this.dtpStart_H.TabIndex = 242;
+            this.dtpStart_H.Value = new System.DateTime(2021, 6, 10, 0, 0, 0, 0);
             // 
             // sLabel4
             // 
@@ -364,6 +367,7 @@ namespace KFQS_Form
             this.btnLotIn.Size = new System.Drawing.Size(72, 33);
             this.btnLotIn.TabIndex = 252;
             this.btnLotIn.Text = "투입";
+            this.btnLotIn.Click += new System.EventHandler(this.btnLotIn_Click);
             // 
             // txtInLotNO
             // 
@@ -415,6 +419,7 @@ namespace KFQS_Form
             this.btnWorker.Size = new System.Drawing.Size(123, 31);
             this.btnWorker.TabIndex = 250;
             this.btnWorker.Text = "작업자 등록";
+            this.btnWorker.Click += new System.EventHandler(this.btnWorker_Click);
             // 
             // ultraLabel3
             // 
