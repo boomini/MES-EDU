@@ -491,3 +491,6 @@ C:\Users\admin\workspace\MES-EDU\KFQS_FORM\bin\Debug\Infragistics2.Win.UltraWinT
 C:\Users\admin\workspace\MES-EDU\KFQS_FORM\bin\Debug\Infragistics2.Win.UltraWinDock.v11.1.xml
 C:\Users\admin\workspace\MES-EDU\KFQS_FORM\bin\Debug\Infragistics2.Documents.Reports.v11.1.xml
 C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.csproj.CopyComplete
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_WorkerPerProd.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_WCTRunStopList.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_STockHALB_M.resources
