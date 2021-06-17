@@ -1,7 +1,7 @@
 ﻿
 namespace KFQS_Form
 {
-    partial class PP_StockPP
+    partial class WM_StockOutWM
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -49,7 +49,6 @@ namespace KFQS_Form
             this.cboItemType_H = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
             this.ultraLabel2 = new Infragistics.Win.Misc.UltraLabel();
             this.ultraLabel3 = new Infragistics.Win.Misc.UltraLabel();
-            this.btnLOTNO_H = new Infragistics.Win.Misc.UltraButton();
             ((System.ComponentModel.ISupportInitialize)(this.gbxHeader)).BeginInit();
             this.gbxHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gbxBody)).BeginInit();
@@ -66,7 +65,6 @@ namespace KFQS_Form
             this.gbxHeader.ContentPadding.Left = 2;
             this.gbxHeader.ContentPadding.Right = 2;
             this.gbxHeader.ContentPadding.Top = 4;
-            this.gbxHeader.Controls.Add(this.btnLOTNO_H);
             this.gbxHeader.Controls.Add(this.ultraLabel3);
             this.gbxHeader.Controls.Add(this.cboItemType_H);
             this.gbxHeader.Controls.Add(this.ultraLabel2);
@@ -215,21 +213,12 @@ namespace KFQS_Form
             this.ultraLabel3.TabIndex = 13;
             this.ultraLabel3.Text = "LOTNO";
             // 
-            // btnLOTNO_H
-            // 
-            this.btnLOTNO_H.Location = new System.Drawing.Point(679, 83);
-            this.btnLOTNO_H.Name = "btnLOTNO_H";
-            this.btnLOTNO_H.Size = new System.Drawing.Size(277, 57);
-            this.btnLOTNO_H.TabIndex = 14;
-            this.btnLOTNO_H.Text = "LOT발행";
-            this.btnLOTNO_H.Click += new System.EventHandler(this.btnLOTNO_H_Click);
-            // 
-            // PP_StockPP
+            // WM_StockOutWM
             // 
             this.ClientSize = new System.Drawing.Size(1326, 652);
-            this.Name = "PP_StockPP";
+            this.Name = "WM_StockOutWM";
             this.Text = "공정 창고 재고관리";
-            this.Load += new System.EventHandler(this.PP_StockPP_Load);
+            this.Load += new System.EventHandler(this.WM_StockOutWM_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gbxHeader)).EndInit();
             this.gbxHeader.ResumeLayout(false);
             this.gbxHeader.PerformLayout();
@@ -251,6 +240,5 @@ namespace KFQS_Form
         private Infragistics.Win.UltraWinEditors.UltraComboEditor cboItemType_H;
         private Infragistics.Win.Misc.UltraLabel ultraLabel2;
         private Infragistics.Win.Misc.UltraLabel ultraLabel3;
-        private Infragistics.Win.Misc.UltraButton btnLOTNO_H;
     }
 }

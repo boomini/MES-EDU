@@ -76,6 +76,7 @@ namespace KFQS_Form
             }
             
         }
+
         public override void DoInquire()
         {
             

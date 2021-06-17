@@ -494,3 +494,8 @@ C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.csproj.CopyCo
 C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_WorkerPerProd.resources
 C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_WCTRunStopList.resources
 C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_STockHALB_M.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.PP_WorkerPerProd_M.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.WM_ProdInStock.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.WM_StockWM.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.WM_StockWM_M.resources
+C:\Users\admin\workspace\MES-EDU\KFQS_FORM\obj\x86\Debug\KFQS_Form.WM_StockOutWM.resources

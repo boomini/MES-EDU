@@ -12,18 +12,18 @@ using System.Windows.Forms;
 
 namespace KFQS_Form
 {
-    public partial class PP_StockPP : DC00_WinForm.BaseMDIChildForm
+    public partial class WM_StockOutWM : DC00_WinForm.BaseMDIChildForm
     {
         //그리드를 셋팅할 수 있도록 도와주는 함수 클래스
         UltraGridUtil _GridUtil = new UltraGridUtil();
         // 공장 변수 입력
         private String plantCode = LoginInfo.PlantCode;
-        public PP_StockPP()
+        public WM_StockOutWM()
         {
             InitializeComponent();
         }
 
-        private void PP_StockPP_Load(object sender, EventArgs e)
+        private void WM_StockOutWM_Load(object sender, EventArgs e)
         {
             // 그리드를 셋팅한다.
             try
@@ -47,23 +47,11 @@ namespace KFQS_Form
 
 
 
-                #region ▶ COMBOBOX ◀
+               
                 dtTemp = _Common.Standard_CODE("PLANTCODE");  // 공장
                 Common.FillComboboxMaster(this.cboPlantCode_H, dtTemp, dtTemp.Columns["CODE_ID"].ColumnName, dtTemp.Columns["CODE_NAME"].ColumnName, "ALL", "");
 
-                dtTemp = _Common.Standard_CODE("ITEMTYPE");//품목
-                Common.FillComboboxMaster(this.cboItemType_H, dtTemp, dtTemp.Columns["CODE_ID"].ColumnName, dtTemp.Columns["CODE_NAME"].ColumnName, "ALL", "");
-
-
-                // 품목코드 
-                //FP  : 완제품
-                //OM  : 외주가공품
-                //R/M : 원자재
-                //S/M : 부자재(H / W)
-                //SFP : 반제품
-
-                #endregion
-
+               
 
             }
             catch (Exception ex)
@@ -88,7 +76,7 @@ namespace KFQS_Form
 
 
                 DataTable dtTemp = new DataTable();
-                dtTemp = helper.FillTable("03PP_StockPP_S1", CommandType.StoredProcedure
+                dtTemp = helper.FillTable("03WM_StockOutWM_S1", CommandType.StoredProcedure
                                             , helper.CreateParameter("PLANTCODE", sPlantCode, DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("ITEMTYPE", sItemType, DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("LOTNO", sLotNO, DbType.String, ParameterDirection.Input)
@@ -130,55 +118,58 @@ namespace KFQS_Form
         public override void DoSave()
         {
 
-            //그리드에 표현된 내용을 소스 바인딩에 포함한다.
             this.grid1.UpdateData();
-            DataTable dt = new DataTable();
-            dt = grid1.chkChange();
-
-            DBHelper helper = new DBHelper("", true);
-
-            try
+            DataTable dt = grid1.chkChange();
+            if (dt == null)
+                return;
+            string sCarNo = Convert.ToString(dt.Rows[0]["CARNO"]);
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                this.Focus();
-
-                if (this.ShowDialog("C:Q00009") == System.Windows.Forms.DialogResult.Cancel)
+                if (sCarNo != Convert.ToString(dt.Rows[i]["CARNO"]))
                 {
-                    CancelProcess = true;
+                    ShowDialog("차량 번호가 동일하지 않은 출고 등록 및 거래명세서는 발행 할 수 없습니다.", DialogForm.DialogType.OK);
                     return;
                 }
+            }
+            DBHelper helper = new DBHelper("", true);
+            try
+            {
+                // 동일한 차량 번호만 선택 하였는지 확인!
 
-                base.DoSave();
+                if (this.ShowDialog("선택하신 내역을 출고 등록 하시겠습니까 ?") == System.Windows.Forms.DialogResult.Cancel) return;
 
+                string sTradingNo = string.Empty;
                 foreach (DataRow drRow in dt.Rows)
                 {
-                    if (drRow.RowState == DataRowState.Modified)
+                    switch (drRow.RowState)
                     {
-                        #region 수정
-                        string check = drRow["ITEMTYPE"].ToString();
-                        if (drRow["ITEMTYPE"].ToString() != "ROH")
-                        {
-                            helper.Rollback();
-                            MessageBox.Show("원자재만 선택 가능합니다.");
-                            return;
-                        }
-                        string sOrderFalg = string.Empty;
-                        if (Convert.ToString(drRow["CHK"]).ToUpper() == "1")
-                        {
+                        case DataRowState.Deleted:
+                            #region 삭제 
+                            #endregion
+                            break;
+                        case DataRowState.Added:
+                            #region 추가
 
-                            helper.ExecuteNoneQuery("03PP_StockPP_U1", CommandType.StoredProcedure
-                                                     , helper.CreateParameter("PLANTCODE", drRow["PLANTCODE"].ToString(), DbType.String, ParameterDirection.Input)
-                                                     , helper.CreateParameter("LotNo", drRow["LOTNO"].ToString(), DbType.String, ParameterDirection.Input)
-                                                     , helper.CreateParameter("ItemCode", drRow["ITEMCODE"].ToString(), DbType.String, ParameterDirection.Input)
-                                                     , helper.CreateParameter("Qty", drRow["STOCKQTY"].ToString(), DbType.String, ParameterDirection.Input)
-                                                     , helper.CreateParameter("UnitCode", drRow["UNITCODE"].ToString(), DbType.String, ParameterDirection.Input)
-                                                     , helper.CreateParameter("WorkerId", LoginInfo.UserID, DbType.String, ParameterDirection.Input)
-                                                     );
+                            #endregion
+                            break;
+                        case DataRowState.Modified:
+                            #region 수정 
+                            helper.ExecuteNoneQuery("WM_StockOutWM_U1", CommandType.StoredProcedure
+                                                  , helper.CreateParameter("PLANTCODE", Convert.ToString(drRow["PLANTCODE"]), DbType.String, ParameterDirection.Input)
+                                                  , helper.CreateParameter("SHIPNO", Convert.ToString(drRow["SHIPNO"]), DbType.String, ParameterDirection.Input)
+                                                  , helper.CreateParameter("TRADINGNO", sTradingNo, DbType.String, ParameterDirection.Input)
+                                                  , helper.CreateParameter("MAKER", LoginInfo.UserID, DbType.String, ParameterDirection.Input)
+                                                  );
 
-                        }
-                        else return;
-                        #endregion
-                        break;
+                            if (helper.RSCODE == "S")
+                            {
+                                sTradingNo = helper.RSMSG;
+                            }
+                            else break;
+                            #endregion
+                            break;
                     }
+                    if (helper.RSCODE != "S") break;
                 }
                 if (helper.RSCODE != "S")
                 {
@@ -189,63 +180,21 @@ namespace KFQS_Form
                 }
                 helper.Commit();
                 this.ClosePrgForm();
-                this.ShowDialog("R00002", DialogForm.DialogType.OK);    // 데이터가 저장 되었습니다.
+                this.ShowDialog("데이터가 저장 되었습니다.", DialogForm.DialogType.OK);
                 DoInquire();
             }
             catch (Exception ex)
             {
                 CancelProcess = true;
                 helper.Rollback();
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                helper.Close();
-            }
-        }
-
-        private void btnLOTNO_H_Click(object sender, EventArgs e)
-        {
-            DBHelper helper = new DBHelper(false);
-            try
-            {
-                string sPlantCode = Convert.ToString(grid1.ActiveRow.Cells["PLANTCODE"].Value);
-                string sLotNo = Convert.ToString(grid1.ActiveRow.Cells["LOTNO"].Value);
-
-                DataTable dtTemp = helper.FillTable("03PP_StockPP_S2", CommandType.StoredProcedure,
-                                                    helper.CreateParameter("PLANTCODE", sPlantCode, DbType.String, ParameterDirection.Input),
-                                                    helper.CreateParameter("LOTNO", sLotNo, DbType.String, ParameterDirection.Input));
-                if (dtTemp.Rows.Count == 0)
-                {
-                    ShowDialog("바코드 정보를 조회 할 내용이 없습니다.", DialogForm.DialogType.OK);
-                    return;
-                }
-                //바코드 디자인 선언
-                Report_LotBacodeFERT sReportFert = new Report_LotBacodeFERT();
-                //바코드 디자인이 첨부될 레프트 북 클래스 선언
-                Telerik.Reporting.ReportBook repBook = new Telerik.Reporting.ReportBook();
-                //바코드 디자인에 데이터바인딩
-                sReportFert.DataSource = dtTemp;
-                // 레포트 북에 디자인 추가
-                repBook.Reports.Add(sReportFert);
-
-                // 레포트 미리보기 창에 레포트 북 등록 및 출력 장수 입력
-                ReportViewer BarcodeViewer = new ReportViewer(repBook, 1);
-                // 미리보기 창 호출
-                BarcodeViewer.ShowDialog();
-
-            }
-            catch (Exception ex)
-            {
                 ShowDialog(ex.ToString());
             }
             finally
             {
                 helper.Close();
             }
-
-
         }
+
     }
 }
 
