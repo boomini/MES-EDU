@@ -59,7 +59,7 @@ namespace KFQS_Form
             _GridUtil.InitColumnUltraGrid(grid1, "ITEMTYPE",        "품목타입",    false, GridColDataType_emu.VarChar, 110, 100, Infragistics.Win.HAlign.Left,    true, false);
             _GridUtil.InitColumnUltraGrid(grid1, "WHCode",          "창고명",      false, GridColDataType_emu.VarChar, 100, 100, Infragistics.Win.HAlign.Left,    false, false);
             _GridUtil.InitColumnUltraGrid(grid1, "STOCKQTY",        "LOT수량",     false, GridColDataType_emu.Double,  70, 100, Infragistics.Win.HAlign.Right,    true, false);
-            _GridUtil.InitColumnUltraGrid(grid1, "UNITCODE",        "단위",        false, GridColDataType_emu.VarChar,  50, 100, Infragistics.Win.HAlign.Left,    true, false);
+            _GridUtil.InitColumnUltraGrid(grid1, "BASEUNIT",        "단위",        false, GridColDataType_emu.VarChar,  50, 100, Infragistics.Win.HAlign.Left,    true, false);
             _GridUtil.InitColumnUltraGrid(grid1, "MAKER",           "등록자",      false, GridColDataType_emu.VarChar, 100, 100, Infragistics.Win.HAlign.Left,    true, false);
             _GridUtil.InitColumnUltraGrid(grid1, "MAKEDATE",        "등록일시",    false, GridColDataType_emu.VarChar, 100, 100, Infragistics.Win.HAlign.Left, true, false);
             _GridUtil.SetInitUltraGridBind(grid1);
@@ -176,7 +176,7 @@ namespace KFQS_Form
                                             , helper.CreateParameter("LOTNO",          Convert.ToString(dt.Rows[i]["LOTNO"])    , DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("ITEMCODE",       Convert.ToString(dt.Rows[i]["ITEMCODE"]) , DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("INOUTQTY",       Convert.ToString(dt.Rows[i]["STOCKQTY"]) , DbType.String, ParameterDirection.Input)
-                                            , helper.CreateParameter("UNITCODE",       Convert.ToString(dt.Rows[i]["UNITCODE"]) , DbType.String, ParameterDirection.Input)
+                                            , helper.CreateParameter("UNITCODE",       Convert.ToString(dt.Rows[i]["BASEUNIT"]) , DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("MAKER",          LoginInfo.UserID                         , DbType.String, ParameterDirection.Input));
 
                     if (helper.RSCODE != "S")
