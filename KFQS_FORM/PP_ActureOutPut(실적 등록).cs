@@ -43,6 +43,7 @@ namespace KFQS_Form
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKCENTERCODE", "작업장", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKSTATUSCODE", "가동/비가동 상태", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKSTATUS", "가동/비가동 상태", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
+                _GridUtil.InitColumnUltraGrid(grid1, "ERRORFLAG", "고장/정상 상태", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKER", "작업자", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKERNAME", "작업자명", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "STARTDATE", "최초가동 시작시간", true, GridColDataType_emu.DateTime24, 160, 130, Infragistics.Win.HAlign.Left, true, false);
@@ -103,7 +104,7 @@ namespace KFQS_Form
 
 
                 DataTable dtTemp = new DataTable();
-                dtTemp = helper.FillTable("03PP_ActureOutPut_S1", CommandType.StoredProcedure
+                dtTemp = helper.FillTable("03PP_ActureOutPut_S33", CommandType.StoredProcedure
                                             , helper.CreateParameter("PLANTCODE",      sPlantCode,      DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("WORKCENTERCODE", sWorkcentercode, DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("STARTDATE",      sStartDate,      DbType.String, ParameterDirection.Input)
