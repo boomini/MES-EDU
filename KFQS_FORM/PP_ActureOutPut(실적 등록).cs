@@ -43,6 +43,7 @@ namespace KFQS_Form
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKCENTERCODE", "작업장", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKSTATUSCODE", "가동/비가동 상태", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKSTATUS", "가동/비가동 상태", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
+                _GridUtil.InitColumnUltraGrid(grid1, "ERRORFLAG", "고장/정상 상태", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKER", "작업자", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "WORKERNAME", "작업자명", true, GridColDataType_emu.VarChar, 130, 130, Infragistics.Win.HAlign.Left, true, false);
                 _GridUtil.InitColumnUltraGrid(grid1, "STARTDATE", "최초가동 시작시간", true, GridColDataType_emu.DateTime24, 160, 130, Infragistics.Win.HAlign.Left, true, false);
@@ -103,7 +104,7 @@ namespace KFQS_Form
 
 
                 DataTable dtTemp = new DataTable();
-                dtTemp = helper.FillTable("03PP_ActureOutPut_S1", CommandType.StoredProcedure
+                dtTemp = helper.FillTable("03PP_ActureOutPut_S33", CommandType.StoredProcedure
                                             , helper.CreateParameter("PLANTCODE",      sPlantCode,      DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("WORKCENTERCODE", sWorkcentercode, DbType.String, ParameterDirection.Input)
                                             , helper.CreateParameter("STARTDATE",      sStartDate,      DbType.String, ParameterDirection.Input)
@@ -511,6 +512,39 @@ namespace KFQS_Form
             {
                 helper.Rollback();
                 ShowDialog(ex.ToString(), DC00_WinForm.DialogForm.DialogType.OK);
+            }
+            finally
+            {
+                helper.Close();
+            }
+        }
+
+        private void btnError_Click(object sender, EventArgs e)
+        {
+             
+           DBHelper helper = new DBHelper("", true);
+            try
+            {
+                helper.ExecuteNoneQuery("03PP_ActureOutput_U33", CommandType.StoredProcedure
+                                                                    , helper.CreateParameter("PLANTCODE", "1000", DbType.String, ParameterDirection.Input)
+                                                                    , helper.CreateParameter("WORKCENTERCODE", Convert.ToString(this.grid1.ActiveRow.Cells["WORKCENTERCODE"].Value), DbType.String, ParameterDirection.Input)
+                                                                    , helper.CreateParameter("ORDDERNO", Convert.ToString(this.grid1.ActiveRow.Cells["ORDDERNO"].Value), DbType.String, ParameterDirection.Input)
+                                                                    , helper.CreateParameter("WORKER", LoginInfo.UserID , DbType.String, ParameterDirection.Input)
+                                                                    );
+                if (helper.RSCODE == "S")
+                {
+                    helper.Commit();
+                    ShowDialog("정상적으로 등록되었습니다.", DC00_WinForm.DialogForm.DialogType.OK);
+                }
+                else
+                {
+                    helper.Rollback();
+                    ShowDialog("데이터 등록 중 오류가 발생했습니다.", DC00_WinForm.DialogForm.DialogType.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowDialog(ex.ToString());
             }
             finally
             {
